@@ -1,0 +1,42 @@
+name: CI Proof Core
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🧰 Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: 🧪 Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.11.0"
+
+      - name: 📦 Install Node.js dependencies
+        run: yarn install
+
+      - name: 🐳 Start local Solana validator (Docker)
+        run: docker run -d --name solana-test-validator -p 8899:8899 solanalabs/solana:v1.18.11 solana-test-validator --quiet --reset
+
+      - name: 🛠️ Install Anchor
+        run: |
+          curl -sSf https://raw.githubusercontent.com/coral-xyz/anchor/master/scripts/install.sh | sh
+
+      - name: 🚧 Build & deploy Anchor program
+        run: ./scripts/run-tests.sh
+
+      - name: 🧪 Run Mocha tests
+        run: yarn test

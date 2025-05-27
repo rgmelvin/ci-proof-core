@@ -1,0 +1,22 @@
+# Rust / Anchor
+.anchor
+target
+**/*.rs.bk
+
+# Node / Yarn
+node_modules
+.yarn
+.yarnrc.yml
+.yarn-integrity
+
+# System
+.DS_Store
+
+# Test Artifacts
+test-ledger
+.ledger
+
+# TypeScript / Mocha
+coverage
+dist
+*.tsbuildinfo
