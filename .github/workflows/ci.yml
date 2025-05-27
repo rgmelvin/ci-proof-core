@@ -32,10 +32,13 @@ jobs:
       - name: 🐳 Start local Solana validator (Docker)
         run: docker run -d --name solana-test-validator -p 8899:8899 solanalabs/solana:v1.18.11 solana-test-validator --quiet --reset
 
-      - name: 🛠️ Install Anchor CLI and update PATH
+      - name: 🛠️ Install Anchor CLI
         run: |
           curl -sSf https://raw.githubusercontent.com/coral-xyz/anchor/master/scripts/install.sh | sh
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          export PATH="$HOME/.cargo/bin:$PATH"
+          anchor --version
+
 
       - name: 🚧 Build & deploy Anchor program
         run: ./scripts/run-tests.sh
