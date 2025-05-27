@@ -74,11 +74,7 @@ jobs:
         run: anchor deploy
 
       - name: ⏳ Wait for program readiness
-        run: >
-          node --import 'data:text/javascript,import { register } from "node:module";
-          import { pathToFileURL } from "node:url";
-          register("ts-node/esm", pathToFileURL("./"))'
-          --no-warnings scripts/wait-for-program.ts
+        run: yarn wait
 
       - name: 🧪 Run Mocha test suite
         run: yarn test
