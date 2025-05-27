@@ -3,8 +3,8 @@
   "scripts": {
     "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
     "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check",
-    "wait": "node --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"ts-node/esm\", pathToFileURL(\"./\"))' --no-warnings scripts/wait-for-program.ts",
-    "test": "node --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"ts-node/esm\", pathToFileURL(\"./\"))' --no-warnings node_modules/.bin/mocha -t 1000000 tests/**/*.mts"
+    "wait": "node --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"ts-node/esm\", pathToFileURL(\"./\"))' --no-warnings scripts/wait-for-program.mts",
+  "test": "node --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"ts-node/esm\", pathToFileURL(\"./\"))' --no-warnings node_modules/.bin/mocha -t 1000000 tests/**/*.mts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.31.1"
