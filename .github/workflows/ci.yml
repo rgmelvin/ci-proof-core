@@ -60,6 +60,13 @@ jobs:
           sleep 10
           solana config set --url http://localhost:8899
 
+      - name: 🔐 Create default Solana keypair
+        run: |
+          mkdir -p ~/.config/solana
+          solana-keygen new --no-bip39-passphrase -o ~/.config/solana/id.json --force
+          solana config set --keypair ~/.config/solana/id.json
+          solana airdrop 2
+
       - name: 🧱 Build Anchor program
         run: anchor build
 
