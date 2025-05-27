@@ -1,4 +1,4 @@
-name: CI Proof Core
+name: 🧪 CI Proof Core Test
 
 on:
   push:
@@ -10,38 +10,64 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+      ANCHOR_VERSION: 0.31.1
+      SOLANA_VERSION: 1.18.11
+      NODE_VERSION: 18
+
     steps:
-      - name: 📥 Checkout repository
-        uses: actions/checkout@v4
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
 
       - name: 🧰 Set up Rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
-          components: rustfmt, clippy
 
-      - name: 🧪 Set up Node.js
-        uses: actions/setup-node@v4
+      - name: 💾 Cache Cargo registry
+        uses: actions/cache@v3
         with:
-          node-version: "20.18.0"
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: 📦 Install Node.js dependencies
+      - name: 💾 Cache Cargo git repos
+        uses: actions/cache@v3
+        with:
+          path: ~/.cargo/git
+          key: ${{ runner.os }}-cargo-git-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: ⚓ Install Solana CLI
+        run: |
+          sh -c "$(curl -sSfL https://release.anza.xyz/stable/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
+
+      - name: 🚀 Install Anchor CLI
+        run: |
+          cargo install --git https://github.com/coral-xyz/anchor --tag v${ANCHOR_VERSION} anchor-cli --locked
+
+      - name: 🟢 Install Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 📦 Install Node dependencies
         run: yarn install
 
-      - name: 🐳 Start local Solana validator (Docker)
-        run: docker run -d --name solana-test-validator -p 8899:8899 solanalabs/solana:v1.18.11 solana-test-validator --quiet --reset
-
-      - name: 🛠️ Install Anchor CLI
+      - name: 🔧 Start Solana test validator
         run: |
-          cargo install --git https://github.com/coral-xyz/anchor --tag v0.31.1 anchor-cli --locked
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-          export PATH="$HOME/.cargo/bin:$PATH"
-          anchor --version
+          nohup solana-test-validator > validator.log 2>&1 &
+          sleep 10
+          solana config set --url http://localhost:8899
 
+      - name: 🧱 Build Anchor program
+        run: anchor build
 
-      - name: 🚧 Build & deploy Anchor program
-        run: ./scripts/run-tests.sh
+      - name: 📡 Deploy Anchor program
+        run: anchor deploy
 
-      - name: 🧪 Run Mocha tests
+      - name: ⏳ Wait for program readiness
+        run: yarn ts-node scripts/wait-for-program.ts
+
+      - name: 🧪 Run Mocha test suite
         run: yarn test
