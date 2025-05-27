@@ -34,7 +34,7 @@ jobs:
 
       - name: 🛠️ Install Anchor CLI
         run: |
-          curl -sSf https://anchor.projectserum.com/install.sh | sh
+          cargo install --git https://github.com/coral-xyz/anchor --tag v0.31.1 anchor-cli --locked
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
           export PATH="$HOME/.cargo/bin:$PATH"
           anchor --version
