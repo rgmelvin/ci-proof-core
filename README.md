@@ -172,4 +172,4 @@ We will use `ci-proof-core` to incrementally reintroduce Beargrease modules, ver
 
 ## 📜 License
 
-MIT – see [LICENSE](https://chatgpt.com/c/LICENSE)
+MIT – see [MIT License](https://github.com/rgmelvin/ci-proof-core/blob/main/LICENSE)
