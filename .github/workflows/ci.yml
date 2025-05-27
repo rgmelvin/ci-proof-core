@@ -75,6 +75,15 @@ jobs:
       - name: 📡 Deploy Anchor program
         run: anchor deploy
 
+      - name: 🛠 Patch Anchor.toml and lib.rs with deployed program ID
+        run: |
+          ID=$(solana address -k target/deploy/ci_proof_core-keypair.json)
+          echo "🔑 Deployed program ID: $ID"
+
+          sed -i "s/^ci_proof_core *= *\"[^\"]*\"/ci_proof_core = \"$ID\"/" Anchor.toml
+
+          sed -i "s/^declare_id!([^)]*)/declare_id!(\"$ID\")/" programs/ci-proof-core/src/lib.rs
+
       - name: 📣 Trigger say_hello instruction
         run: yarn test --exit
 
