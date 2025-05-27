@@ -80,21 +80,13 @@ jobs:
           ID=$(solana address -k target/deploy/ci_proof_core-keypair.json)
           echo "🔑 Deployed program ID: $ID"
 
-          echo "------ BEFORE Anchor.toml ------"
-          cat Anchor.toml
-
-          echo "------ BEFORE lib.rs ------"
-          cat programs/ci-proof-core/src/lib.rs
-
           sed -i "s/^ci_proof_core *= *\"[^\"]*\"/ci_proof_core = \"$ID\"/" Anchor.toml
           sed -i "s/^declare_id!([^)]*)/declare_id!(\"$ID\")/" programs/ci-proof-core/src/lib.rs
 
-          echo "------ AFTER Anchor.toml ------"
-          cat Anchor.toml
-
-          echo "------ AFTER lib.rs ------"
-          cat programs/ci-proof-core/src/lib.rs
-
+      - name: 🔁 Rebuild and redeploy with patched program ID
+        run: |
+          anchor build
+          anchor deploy
 
       - name: 📣 Trigger say_hello instruction
         run: yarn test --exit
