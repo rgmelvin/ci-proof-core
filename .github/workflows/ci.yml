@@ -34,7 +34,7 @@ jobs:
 
       - name: 🛠️ Install Anchor CLI and update PATH
         run: |
-          sh -c "$(curl -sSfL https://release.anchor-lang.com/install.sh)"
+          curl -sSf https://raw.githubusercontent.com/coral-xyz/anchor/master/scripts/install.sh | sh
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
       - name: 🚧 Build & deploy Anchor program
