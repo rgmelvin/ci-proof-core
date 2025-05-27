@@ -19,6 +19,7 @@ jobs:
         with:
           toolchain: stable
           override: true
+          components: rustfmt, clippy
 
       - name: 🧪 Set up Node.js
         uses: actions/setup-node@v4
@@ -33,7 +34,7 @@ jobs:
 
       - name: 🛠️ Install Anchor
         run: |
-          curl -sSf https://raw.githubusercontent.com/coral-xyz/anchor/master/scripts/install.sh | sh
+          sh -c "$(curl -sSfL https://release.anchor-lang.com/install.sh)"
 
       - name: 🚧 Build & deploy Anchor program
         run: ./scripts/run-tests.sh
