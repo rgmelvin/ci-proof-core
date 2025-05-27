@@ -88,11 +88,8 @@ jobs:
           anchor build
           anchor deploy
 
-      - name: 📣 Trigger say_hello instruction
-        run: yarn test --exit
-
       - name: ⏳ Wait for program readiness
         run: yarn wait
 
-      - name: 🧪 Run Mocha test suite
-        run: yarn test
+      - name: 📣 Trigger say_hello instruction
+        run: yarn test --exit
