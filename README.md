@@ -125,6 +125,10 @@ yarn test
 1. Modify the program in `src/lib.rs`
 2. Add your own test in `tests/*.test.mts`
 
+   For more details on running CI-Proof-Core, see the [Beginner's Guide to ci-proof-core](https://github.com/rgmelvin/ci-proof-core/blob/main/docs/beginner-guide.md)
+
+
+
 ------
 
 ## 🧭 How This Relates to Beargrease
