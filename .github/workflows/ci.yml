@@ -67,7 +67,7 @@ jobs:
           mkdir -p ~/.config/solana
           solana-keygen new --no-bip39-passphrase -o ~/.config/solana/id.json --force
           solana config set --keypair ~/.config/solana/id.json
-          solana airdrop 2
+          solana airdrop 10
 
       - name: 🧱 Build Anchor program
         run: anchor build
