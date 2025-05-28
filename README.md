@@ -157,6 +157,34 @@ We will use `ci-proof-core` to incrementally reintroduce Beargrease modules, ver
 
 ------
 
+## 🔐 Security Scope and Disclaimer
+
+This repository is a **conceptual proof**—not a production-hardened implementation.
+
+The CI pipeline and test harness here are intended to demonstrate a clean, fully working flow for:
+
+- Building and deploying Anchor programs in CI
+- Dynamically patching program IDs
+- Running Mocha-based ESM tests against a local `solana-test-validator`
+
+While it uses best practices for dependency management, permission scoping, and workflow hygiene, **it does not include**:
+
+- Container isolation for validator sandboxing
+- Secret rotation or hardened credential management
+- Runtime validation of Solana program logic or test results beyond the included assertions
+- Audit-ready controls for production deployment pipelines
+
+This project is published under the MIT License and provided *as-is*, without warranty. It is meant for education, experimentation, and as a foundation for building more robust systems—like the upcoming Beargrease harness, which will include:
+
+- Pluggable security modules
+- CI credential sandboxing
+- Verifiable test isolation
+- Portable and standardized workflows for team use
+
+If you use this scaffold in a real-world system, please **audit your changes carefully**, and do not treat it as a drop-in production pipeline without further hardening.
+
+---
+
 ## 🌟 Version
 
 - `scaffold-v0.1`: clean baseline without Beargrease or Docker
