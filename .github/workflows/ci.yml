@@ -72,7 +72,7 @@ jobs:
       - name: 🧱 Build Anchor program
         run: anchor build
 
-      - name: 📡 Deploy Anchor program
+      - name: 📡 Deploy Anchor program                                                                      
         run: anchor deploy
 
       - name: 🛠 Patch Anchor.toml and lib.rs with deployed program ID
@@ -89,4 +89,4 @@ jobs:
           anchor deploy
 
       - name: 📣 Trigger say_hello instruction
-        run: yarn test --exit
+        run: yarn test --exit                                             

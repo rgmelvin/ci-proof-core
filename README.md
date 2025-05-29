@@ -11,7 +11,7 @@ This repo proves the minimal setup required to run a full Solana Anchor test sui
 - Builds an Anchor program
 - Deploys to `solana-test-validator` in CI
 - Automatically patches `Anchor.toml` and `lib.rs` with the deployed program ID
-- Runs TypeScript ESM tests via Mocha
+- Runs TypeScript ESM tests via Mocha using `ts-node`in `NodeNext` mode
 - Passes CI with a single command: `yarn test`
 
 ------
@@ -125,7 +125,7 @@ yarn test
 1. Modify the program in `src/lib.rs`
 2. Add your own test in `tests/*.test.mts`
 
-   For more details on running CI-Proof-Core, see the [Beginner's Guide to ci-proof-core](https://github.com/rgmelvin/ci-proof-core/blob/main/docs/beginner-guide.md)
+   For more details on running CI-Proof-Core, see the [Beginner's Guide to ci-proof-core](https://github.com/rgmelvin/ci-proof-core/blob/main/docs/beginner-guide.md) for full instructions on running tests, understanding structure, and modifying the program.
 
 
 
@@ -148,6 +148,8 @@ Beargrease remains the goal:
 - Fully automated and reusable across multiple Anchor projects
 
 We will use `ci-proof-core` to incrementally reintroduce Beargrease modules, verifying correctness at every step. Future Beargrease updates will refer to this scaffold for clarity and reproducibility.
+This scaffold serves as the controlled environment for testing Beargrease’s new [Directory Checkout Mode](https://github.com/rgmelvin/beargrease-by-Cabrillo!) introduced in v1.1.0. Any new module, patch, or CI flow in Beargrease must prove itself here before upstreaming.
+
 
 ------
 
@@ -155,7 +157,7 @@ We will use `ci-proof-core` to incrementally reintroduce Beargrease modules, ver
 
 - Solana CLI v1.18.11
 - Anchor CLI v0.31.1
-- Node.js v20.18.0
+- Node.js v20.18.0 (as used in GitHub Actions runner)
 - Yarn v1.22.22
 - TypeScript + Mocha using ESM (`.mts`) and `ts-node`
 
